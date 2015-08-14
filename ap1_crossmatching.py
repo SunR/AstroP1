@@ -60,8 +60,18 @@ print "time at of cross-matching = ", startTime
 
 numMatches = 0
 numNoMatch = 0
-for row in range(len(data2)):
-    if RAs[row] in sdss_ras and DECs[row] in sdss_decs: #this still doesn't work. return index of ras and plug it into decs and see if those match.
+
+gzPairs = []
+sdssPairs = []
+
+for row in range(len(RAs)):
+    gzPairs.append((RAs[row], DECs[row]))
+
+for row in range(len(sdss_ras)):
+    sdssPairs.append((sdss_ras[row], sdss_decs[row]))
+    
+for row in range(len(gzPairs)):
+    if gzPairs[row] in sdssPairs: #cross-matching tuples instead now, ra AND dec
         #print "found a match!"
         sdss_color_data.append(data2[row])
         gzIndexes.append(row)
