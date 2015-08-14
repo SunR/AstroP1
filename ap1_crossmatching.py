@@ -63,16 +63,23 @@ numNoMatch = 0
 for row in range(len(data2)):
     if RAs[row] in sdss_ras: 
         #print "found a match!"
-        sdss_color_data.append(sdss_ras[row])
+        sdss_color_data.append(data2[row])
         gzIndexes.append(row)
-        numMatch += 1
+        numMatches += 1
     else:
         numNoMatch +=1
 
     if row%10000 == 0: #every 10000 rows, report in    
-        print "completed", row, "cross-matches"
+        print "completed", row, "tests, found", numMatches, "cross-matches"
         print "time = ", time.time() - startTime
+
+print "Cross-matching finished, time = ", time.time() - startTime
+print
 print numMatches, "galaxies matched with SDSS data", numNoMatch, "not matched, out of total", numMatches + numNoMatch, "tested from GZ data"
+print
+print "Indexes of gz data that match", gzIndexes
+print
+print "Corresponding SDSS data", sdss_color_data
 
 ##clf = svm.SVC(random_state = 3) #DON'T DO THIS!
 ###clf.fit(trainingSet, trainingSetLabels)
