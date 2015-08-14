@@ -61,7 +61,7 @@ print "time at of cross-matching = ", startTime
 numMatches = 0
 numNoMatch = 0
 for row in range(len(data2)):
-    if RAs[row] in sdss_ras: 
+    if RAs[row] in sdss_ras and DECs[row] in sdss_decs: #this still doesn't work. return index of ras and plug it into decs and see if those match.
         #print "found a match!"
         sdss_color_data.append(data2[row])
         gzIndexes.append(row)
