@@ -5,6 +5,7 @@ import numpy as np
 from sklearn import svm
 import astroML
 from astroML.datasets import fetch_sdss_specgals
+import time
 
 #data = np.loadtxt("GalaxyZoo1_DR_table2.txt", delimiter = ",", skiprows = 1, usecols = (1,2,13, 14, 15))
 labels = np.loadtxt("GalaxyZoo1_DR_table2.txt", delimiter = ",", skiprows = 1, usecols = (14,)) #only gets binary label col of elliptical
@@ -42,10 +43,36 @@ print RAs[-5:]
 print DECs[-5:]
 print sdss_ras[:5]
 
+gzIndexes = []
+sdss_color_data = []
+
+#round RAs and DECs to 4th decimal place so they can match other catalogue
+for row in range(len(RAs)):
+    RAs[row] = round(RAs[row], 4)
+    DECs[row] = round(DECs[row], 4)
+
 for row in range(len(data2)):
-    if sdss_ras[row] in RAs: #go the other way around, you need RAs index to find label
-        print "found a match!"
-        print sdss_ras[row]
+    sdss_ras[row] = round(sdss_ras[row], 4)
+    sdss_decs[row] = round(sdss_decs[row], 4)
+
+startTime = time.time()
+print "time at of cross-matching = ", startTime
+
+numMatches = 0
+numNoMatch = 0
+for row in range(len(data2)):
+    if RAs[row] in sdss_ras: 
+        #print "found a match!"
+        sdss_color_data.append(sdss_ras[row])
+        gzIndexes.append(row)
+        numMatch += 1
+    else:
+        numNoMatch +=1
+
+    if row%10000 == 0: #every 10000 rows, report in    
+        print "completed", row, "cross-matches"
+        print "time = ", time.time() - startTime
+print numMatches, "galaxies matched with SDSS data", numNoMatch, "not matched, out of total", numMatches + numNoMatch, "tested from GZ data"
 
 ##clf = svm.SVC(random_state = 3) #DON'T DO THIS!
 ###clf.fit(trainingSet, trainingSetLabels)
