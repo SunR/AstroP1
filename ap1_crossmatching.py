@@ -9,13 +9,17 @@ import time
 
 #data = np.loadtxt("GalaxyZoo1_DR_table2.txt", delimiter = ",", skiprows = 1, usecols = (1,2,13, 14, 15))
 labels = np.loadtxt("GalaxyZoo1_DR_table2.txt", delimiter = ",", skiprows = 1, usecols = (14,)) #only gets binary label col of elliptical
+<<<<<<< HEAD
 gzOBJID = np.loadtxt("GalaxyZoo1_DR_table2.txt", delimiter = ",", skiprows = 1, usecols = (0,))
+=======
+>>>>>>> 43322a5f42e1df8a65e6938c7b83644a7201f1bd
 
 data = open("GalaxyZoo1_DR_table2.txt")
 data2 = fetch_sdss_specgals()
 print len(data2)
 sdss_ras = data2['ra']
 sdss_decs = data2['dec']
+<<<<<<< HEAD
 sdss_objid = data2['objID']
 
 g = set(gzOBJID)
@@ -33,6 +37,8 @@ for ID in gzOBJID:
 
 print "finished looking for objid matches"
 print 
+=======
+>>>>>>> 43322a5f42e1df8a65e6938c7b83644a7201f1bd
 
 RAs = []
 DECs = []
@@ -56,9 +62,15 @@ for line in data:
     dec = decH + decM/60.0 + decS/3600.0
     DECs.append(dec)
     #print ra
+<<<<<<< HEAD
 #print len(RAs)
 #print RAs[-5:]
 #print DECs[-5:]
+=======
+print len(RAs)
+print RAs[-5:]
+print DECs[-5:]
+>>>>>>> 43322a5f42e1df8a65e6938c7b83644a7201f1bd
 print sdss_ras[:5]
 
 gzIndexes = []
@@ -66,7 +78,11 @@ sdss_color_data = []
 
 #round RAs and DECs to 4th decimal place so they can match other catalogue
 for row in range(len(RAs)):
+<<<<<<< HEAD
     RAs[row] = round(RAs[row], 4) #'%.1f' %
+=======
+    RAs[row] = round(RAs[row], 4)
+>>>>>>> 43322a5f42e1df8a65e6938c7b83644a7201f1bd
     DECs[row] = round(DECs[row], 4)
 
 for row in range(len(data2)):
@@ -74,7 +90,11 @@ for row in range(len(data2)):
     sdss_decs[row] = round(sdss_decs[row], 4)
 
 startTime = time.time()
+<<<<<<< HEAD
 print "time at start of cross-matching = ", startTime
+=======
+print "time at of cross-matching = ", startTime
+>>>>>>> 43322a5f42e1df8a65e6938c7b83644a7201f1bd
 
 numMatches = 0
 numNoMatch = 0
@@ -87,6 +107,7 @@ for row in range(len(RAs)):
 
 for row in range(len(sdss_ras)):
     sdssPairs.append((sdss_ras[row], sdss_decs[row]))
+<<<<<<< HEAD
 
 print sdssPairs[:5]
 print gzPairs[:5]
@@ -97,6 +118,11 @@ print gzPairs[:5]
 #print g.intersection(s)
 for row in range(len(gzPairs)):
     if RAs[row] in sdss_ras: #cross-matching tuples instead now, ra AND dec
+=======
+    
+for row in range(len(gzPairs)):
+    if gzPairs[row] in sdssPairs: #cross-matching tuples instead now, ra AND dec
+>>>>>>> 43322a5f42e1df8a65e6938c7b83644a7201f1bd
         #print "found a match!"
         sdss_color_data.append(data2[row])
         gzIndexes.append(row)
@@ -104,7 +130,11 @@ for row in range(len(gzPairs)):
     else:
         numNoMatch +=1
 
+<<<<<<< HEAD
     if row%1000 == 0: #every 10000 rows, report in    
+=======
+    if row%10000 == 0: #every 10000 rows, report in    
+>>>>>>> 43322a5f42e1df8a65e6938c7b83644a7201f1bd
         print "completed", row, "tests, found", numMatches, "cross-matches"
         print "time = ", time.time() - startTime
 
